@@ -2,11 +2,11 @@
 const { currentPath } = Astro.props;
 
 const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Team', href: '/team' },
-    { label: 'Publications', href: '/publications' },
-    { label: 'Teaching', href: '/teaching' },
-    { label: 'News', href: '/news' },
+    { label: 'Home', href: import.meta.env.BASE_URL },
+    { label: 'Team', href: `${import.meta.env.BASE_URL}team` },
+    { label: 'Publications', href: `${import.meta.env.BASE_URL}publications` },
+    { label: 'Teaching', href: `${import.meta.env.BASE_URL}teaching` },
+    { label: 'News', href: `${import.meta.env.BASE_URL}news` },
 ];
 ---
 <nav class="fixed top-0 w-full z-50 bg-surface/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm bg-opacity-90">
@@ -29,7 +29,7 @@ const navItems = [
             ))}
         </div>
         <div class="flex items-center space-x-4">
-            <a href="/contact" class="hidden md:inline-flex bg-primary text-on-primary font-body font-semibold px-6 py-2.5 rounded-lg bg-gradient-to-br from-primary to-primary-container hover:shadow-md transition-shadow">
+            <a href={`${import.meta.env.BASE_URL}contact`} class="hidden md:inline-flex bg-primary text-on-primary font-body font-semibold px-6 py-2.5 rounded-lg bg-gradient-to-br from-primary to-primary-container hover:shadow-md transition-shadow">
                 Contact Us
             </a>
             <button class="md:hidden text-sky-700 dark:text-sky-400 p-2 hover:bg-slate-100/50 dark:hover:bg-slate-800/50 rounded-md transition-all scale-95">

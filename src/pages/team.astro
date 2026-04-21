@@ -144,10 +144,10 @@ const groupBadgeClass: Record<string, string> = {
                     </p>
                 </div>
                 <div class="flex flex-col gap-4 shrink-0">
-                    <a href="/contact" class="bg-primary text-on-primary font-body font-semibold py-3 px-8 rounded-lg hover:bg-primary-container transition-colors shadow-sm text-center whitespace-nowrap">
+                    <a href={`${import.meta.env.BASE_URL}contact`} class="bg-primary text-on-primary font-body font-semibold py-3 px-8 rounded-lg hover:bg-primary-container transition-colors shadow-sm text-center whitespace-nowrap">
                         Contact Us
                     </a>
-                    <a href="/publications" class="border border-inverse-on-surface/30 text-inverse-on-surface font-body font-semibold py-3 px-8 rounded-lg hover:bg-surface-container-low/10 transition-colors text-center whitespace-nowrap opacity-80">
+                    <a href={`${import.meta.env.BASE_URL}publications`} class="border border-inverse-on-surface/30 text-inverse-on-surface font-body font-semibold py-3 px-8 rounded-lg hover:bg-surface-container-low/10 transition-colors text-center whitespace-nowrap opacity-80">
                         View Our Research
                     </a>
                 </div>
