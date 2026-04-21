@@ -12,15 +12,16 @@ const latestNews = newsEntries
     .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
     .slice(0, 4);
 
-// Format date as "OCT 12, 2024"
 function fmtDate(d: Date) {
     return d.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).toUpperCase();
 }
 ---
 
 <Layout title="Home">
-    <!-- Hero Section -->
-    <section class="relative px-6 md:px-12 py-20 max-w-screen-2xl mx-auto">
+    <!-- Hero Section: full-width text over background image -->
+    <section class="relative px-6 md:px-12 py-24 max-w-screen-2xl mx-auto">
+
+        <!-- Background image + gradient -->
         <div class="absolute inset-0 z-0 overflow-hidden rounded-xl">
             {site.heroImageUrl && (
                 <img
@@ -29,50 +30,51 @@ function fmtDate(d: Date) {
                     class="w-full h-full object-cover opacity-20"
                 />
             )}
-            <!-- Gradient fades from left (fully opaque) to ~60% width (transparent), leaving right side clear -->
-            <div class="absolute inset-0 bg-gradient-to-r from-surface from-30% via-surface/70 via-55% to-transparent"></div>
+            <!-- Gradient covers full surface so wide text stays readable -->
+            <div class="absolute inset-0 bg-gradient-to-b from-surface/95 via-surface/90 to-surface/80"></div>
         </div>
 
-        <!-- Two-column layout: text left, news right -->
-        <div class="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-            <!-- Left: hero text, now unconstrained to max-w-3xl -->
-            <div>
-                <p class="text-secondary font-label uppercase tracking-widest text-sm mb-4 font-semibold">{site.heroTagline}</p>
-                <h1 class="font-headline text-5xl md:text-7xl font-bold leading-tight mb-8 text-on-surface">
-                    {site.heroHeadlineLine1} <br/>
-                    <span class="text-primary">{site.heroHeadlineLine2}</span>
-                </h1>
-                <!-- Wider body text — readable because gradient now fully covers the left column -->
-                <p class="font-body text-xl text-on-surface-variant leading-relaxed mb-10">
-                    {site.heroBody}
-                </p>
-                <div class="flex flex-col sm:flex-row gap-4">
-                    <a href="/team" class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label font-semibold shadow-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
-                        Meet Our Team
-                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
-                    </a>
-                    <a href="/publications" class="px-8 py-4 rounded-lg font-label font-semibold text-primary border border-outline-variant hover:bg-surface-container-low transition-colors flex items-center justify-center text-center">
-                        Read Latest Papers
-                    </a>
-                </div>
+        <!-- Hero text: wide, full column -->
+        <div class="relative z-10 max-w-4xl">
+            <p class="text-secondary font-label uppercase tracking-widest text-sm mb-4 font-semibold">{site.heroTagline}</p>
+            <h1 class="font-headline text-5xl md:text-7xl font-bold leading-tight mb-8 text-on-surface">
+                {site.heroHeadlineLine1} <br/>
+                <span class="text-primary">{site.heroHeadlineLine2}</span>
+            </h1>
+            <!-- Body text is now max-w-4xl (matches the container) — readable because gradient is a soft top-down veil -->
+            <p class="font-body text-xl text-on-surface-variant leading-relaxed mb-10">
+                {site.heroBody}
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="/team" class="bg-primary text-on-primary px-8 py-4 rounded-lg font-label font-semibold shadow-md hover:bg-primary-container transition-colors flex items-center justify-center gap-2">
+                    Meet Our Team
+                    <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+                </a>
+                <a href="/publications" class="px-8 py-4 rounded-lg font-label font-semibold text-primary border border-outline-variant hover:bg-surface-container-low transition-colors flex items-center justify-center text-center">
+                    Read Latest Papers
+                </a>
             </div>
+        </div>
+    </section>
 
-            <!-- Right: Latest News feed -->
-            <div class="bg-surface-container-lowest rounded-xl p-8 ambient-shadow flex flex-col self-start">
-                <div class="flex items-center justify-between mb-8">
-                    <h3 class="font-headline text-xl font-bold">Latest Updates</h3>
-                    <span class="material-symbols-outlined text-outline">feed</span>
-                </div>
-                <div class="space-y-6 flex-grow">
-                    {latestNews.map(item => (
-                        <article class="group cursor-pointer border-b border-surface-container-high pb-5 last:border-0 last:pb-0">
-                            <p class="text-secondary font-label text-xs font-bold mb-1">{fmtDate(item.data.date)}</p>
-                            <h4 class="font-body font-semibold text-on-surface group-hover:text-primary transition-colors">{item.data.title}</h4>
-                        </article>
-                    ))}
-                </div>
-                <a href="/news" class="mt-6 block w-full py-3 text-center text-sm font-label font-medium text-primary border-t border-surface-container-high hover:bg-surface-container-low transition-colors">
-                    View All News
+    <!-- Latest News — below the hero, full width -->
+    <section class="px-6 md:px-12 pb-20 max-w-screen-2xl mx-auto">
+        <div class="bg-surface-container-lowest rounded-xl p-8 ambient-shadow">
+            <div class="flex items-center justify-between mb-8">
+                <h3 class="font-headline text-xl font-bold">Latest Updates</h3>
+                <span class="material-symbols-outlined text-outline">feed</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                {latestNews.map(item => (
+                    <article class="group cursor-pointer border-l-2 border-surface-container-high pl-4 hover:border-primary transition-colors">
+                        <p class="text-secondary font-label text-xs font-bold mb-1">{fmtDate(item.data.date)}</p>
+                        <h4 class="font-body font-semibold text-on-surface group-hover:text-primary transition-colors">{item.data.title}</h4>
+                    </article>
+                ))}
+            </div>
+            <div class="mt-8 pt-6 border-t border-surface-container-high text-right">
+                <a href="/news" class="text-sm font-label font-medium text-primary hover:underline underline-offset-4 flex items-center gap-1 justify-end">
+                    View All News <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </a>
             </div>
         </div>
