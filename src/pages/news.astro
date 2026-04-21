@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allNews = await getCollection('news');
+const sortedNews = allNews.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+function fmtDate(d: Date) {
+    return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+---
+
+<Layout title="News">
+    <div class="px-6 md:px-12 max-w-screen-xl mx-auto w-full">
+        <header class="mb-16">
+            <h1 class="text-[3.5rem] leading-tight font-headline text-on-surface mb-4">News & Updates</h1>
+            <p class="text-xl font-body text-on-surface-variant max-w-3xl">
+                The latest announcements, achievements, and events from the WüNLP Chair.
+            </p>
+        </header>
+
+        <section class="space-y-6">
+            {sortedNews.map(item => (
+                <article class="p-8 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all duration-300 group flex flex-col md:flex-row gap-6 items-start">
+                    <div class="w-full md:w-48 shrink-0 pt-1">
+                        <div class="font-label text-sm text-outline">{fmtDate(item.data.date)}</div>
+                    </div>
+                    <div class="flex-1">
+                        <h2 class="text-xl font-headline font-semibold text-on-surface group-hover:text-primary transition-colors mb-2">
+                            {item.data.title}
+                        </h2>
+                        {item.body?.trim() && (
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                                {item.body.trim()}
+                            </p>
+                        )}
+                    </div>
+                </article>
+            ))}
+        </section>
+
+        {sortedNews.length === 0 && (
+            <div class="text-center py-24 text-on-surface-variant font-body">
+                No news items yet. Add a file to <code class="font-mono text-sm bg-surface-container px-2 py-0.5 rounded">src/content/news/</code> to get started.
+            </div>
+        )}
+    </div>
+</Layout>

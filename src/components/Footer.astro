@@ -1,0 +1,21 @@
+---
+import { getCollection } from 'astro:content';
+const settingsEntries = await getCollection('settings');
+const site = settingsEntries[0].data;
+---
+<footer class="w-full mt-auto bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
+    <div class="flex flex-col md:flex-row justify-between items-center px-12 py-10 w-full max-w-screen-2xl mx-auto">
+        <div class="mb-6 md:mb-0 opacity-80 hover:opacity-100 transition-opacity">
+            <img src="/logo.svg" alt="WüNLP Logo" class="h-12 w-auto grayscale -my-2" />
+        </div>
+        <div class="flex flex-wrap justify-center gap-6 mb-6 md:mb-0">
+                    {site.imprintUrl && <a href="/imprint" class="font-label text-sm antialiased text-slate-500 dark:text-slate-400 hover:underline decoration-sky-500 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity">Imprint</a>}
+            {site.privacyUrl && <a href="/privacy" class="font-label text-sm antialiased text-slate-500 dark:text-slate-400 hover:underline decoration-sky-500 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity">Privacy Policy</a>}
+            {site.universityUrl && <a href={site.universityUrl} class="font-label text-sm antialiased text-slate-500 dark:text-slate-400 hover:underline decoration-sky-500 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity">University Portal</a>}
+            {site.contactEmail && <a href="/contact" class="font-label text-sm antialiased text-slate-500 dark:text-slate-400 hover:underline decoration-sky-500 underline-offset-4 opacity-80 hover:opacity-100 transition-opacity">Contact</a>}
+        </div>
+        <div class="font-label text-sm antialiased text-sky-800 dark:text-sky-200 opacity-80 text-center md:text-right">
+            {site.footerCopyright}
+        </div>
+    </div>
+</footer>

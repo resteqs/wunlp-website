@@ -1,0 +1,115 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { marked } from 'marked';
+
+const [areas, projects] = await Promise.all([
+    getCollection('research-areas'),
+    getCollection('projects'),
+]);
+
+const sortedAreas = areas.sort((a, b) => a.data.order - b.data.order);
+const sortedProjects = projects.sort((a, b) => a.data.order - b.data.order);
+
+const badgeClass: Record<string, string> = {
+    primary: 'bg-primary/10 text-primary',
+    secondary: 'bg-secondary/10 text-secondary',
+    tertiary: 'text-tertiary',
+};
+---
+
+<Layout title="Research">
+    <div class="max-w-screen-2xl mx-auto px-6 md:px-12 w-full">
+
+        <!-- Hero -->
+        <section class="mb-24 relative overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary-container p-12 md:p-24 text-on-primary">
+            <div class="relative z-10 max-w-3xl">
+                <span class="text-inverse-primary uppercase tracking-widest font-label text-sm font-semibold mb-4 block">Core Focus</span>
+                <h1 class="text-5xl md:text-7xl font-headline font-bold leading-tight mb-6">Advancing Human-Computer Interaction</h1>
+                <p class="text-lg md:text-xl font-body text-surface-container opacity-90 max-w-2xl leading-relaxed">
+                    Our research pushes the boundaries of Natural Language Processing, focusing on developing robust, interpretable, and highly capable language models that understand context, nuance, and intent.
+                </p>
+            </div>
+            <div class="absolute right-0 top-0 w-1/2 h-full opacity-20 pointer-events-none" style="background: radial-gradient(circle at center, #9bcbff 0%, transparent 70%); transform: translate(20%, -20%);"></div>
+        </section>
+
+        <!-- Research Areas -->
+        <section class="mb-32">
+            <div class="mb-16">
+                <h2 class="text-4xl font-headline font-bold text-primary mb-4">Research Areas</h2>
+                <p class="text-on-surface-variant font-body text-lg max-w-3xl">We operate at the intersection of linguistic theory and deep learning, exploring multiple facets of NLP.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {sortedAreas.map((area) => (
+                    <div class="bg-surface-container-low p-8 rounded-xl hover:bg-surface-container-high transition-colors group cursor-pointer">
+                        <div class="w-14 h-14 bg-surface-container-lowest rounded-lg flex items-center justify-center mb-6 shadow-sm group-hover:shadow-md transition-shadow">
+                            <span class="material-symbols-outlined text-3xl text-primary">{area.data.icon}</span>
+                        </div>
+                        <h3 class="text-2xl font-headline font-bold text-on-surface mb-3 group-hover:text-primary transition-colors">{area.data.title}</h3>
+                        <p class="text-on-surface-variant font-body leading-relaxed mb-6">{area.body?.trim()}</p>
+
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <!-- Active Projects -->
+        <section class="mb-32">
+            <div class="mb-16">
+                <h2 class="text-4xl font-headline font-bold text-primary mb-4">Active Projects</h2>
+                <p class="text-on-surface-variant font-body text-lg max-w-3xl">Currently funded initiatives and collaborative research endeavors.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[300px]">
+                {sortedProjects.map((project) => {
+                    const body = project.body?.trim() ?? '';
+                    if (project.data.size === 'featured') return (
+                        <div class="md:col-span-2 bg-surface-container-low rounded-xl p-8 relative overflow-hidden group">
+                            {project.data.imageUrl && (
+                                <div class="absolute inset-0 z-0">
+                                    <img src={project.data.imageUrl} alt="" class="w-full h-full object-cover opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
+                                    <div class="absolute inset-0 bg-gradient-to-t from-surface-container-lowest/90 via-surface-container-low/50 to-transparent"></div>
+                                </div>
+                            )}
+                            <div class="relative z-10 flex flex-col h-full justify-end">
+                                {project.data.badge && (
+                                    <span class={`font-label text-xs font-bold px-3 py-1 rounded-full w-max mb-4 uppercase tracking-wider ${badgeClass[project.data.badgeColor ?? 'secondary']}`}>{project.data.badge}</span>
+                                )}
+                                <h3 class="text-3xl font-headline font-bold text-on-surface mb-3">{project.data.title}</h3>
+                                <p class="text-on-surface-variant font-body max-w-xl mb-6">{body}</p>
+                                {project.data.linkUrl && (
+                                    <a href={project.data.linkUrl} class="bg-primary text-on-primary font-body font-semibold py-2 px-6 rounded-lg w-max hover:bg-primary-container transition-colors shadow-sm">View Details</a>
+                                )}
+                            </div>
+                        </div>
+                    );
+                    if (project.data.size === 'cta') return (
+                        <div class="md:col-span-2 bg-inverse-surface text-inverse-on-surface rounded-xl p-8 flex items-center">
+                            <div class="w-full">
+                                <h3 class="text-2xl font-headline font-bold mb-3 text-inverse-primary">{project.data.title}</h3>
+                                <p class="font-body opacity-90 max-w-2xl mb-6">{body}</p>
+                                {project.data.linkUrl && (
+                                <a href="/contact" class="bg-primary text-on-primary font-body font-semibold py-2 px-6 rounded-lg hover:bg-primary-container transition-colors shadow-sm">Contact Us</a>
+                                )}
+                            </div>
+                        </div>
+                    );
+                    return (
+                        <div class="bg-surface-container-highest rounded-xl p-8 flex flex-col justify-between">
+                            <div>
+                                {project.data.badge && (
+                                    <span class={`font-label text-sm font-semibold mb-2 block ${badgeClass[project.data.badgeColor ?? 'tertiary']}`}>{project.data.badge}</span>
+                                )}
+                                <h3 class="text-xl font-headline font-bold text-on-surface mb-3">{project.data.title}</h3>
+                                <p class="text-on-surface-variant font-body text-sm line-clamp-4">{body}</p>
+                            </div>
+                            {project.data.linkUrl && (
+                                <a href={project.data.linkUrl} class="text-primary font-body font-semibold text-sm hover:underline underline-offset-4 mt-4 inline-block">Read More</a>
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+        </section>
+
+    </div>
+</Layout>
