@@ -57,18 +57,23 @@ function fmtDate(d: Date) {
         </div>
     </section>
 
-    <!-- Latest News — below the hero, full width -->
+    <!-- Latest News — below the hero, same width as hero text -->
     <section class="px-6 md:px-12 pb-20 max-w-screen-2xl mx-auto">
-        <div class="bg-surface-container-lowest rounded-xl p-8 ambient-shadow">
+        <div class="max-w-4xl bg-surface-container-lowest rounded-xl p-8 ambient-shadow">
             <div class="flex items-center justify-between mb-8">
                 <h3 class="font-headline text-xl font-bold">Latest Updates</h3>
                 <span class="material-symbols-outlined text-outline">feed</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="space-y-6">
                 {latestNews.map(item => (
                     <article class="group cursor-pointer border-l-2 border-surface-container-high pl-4 hover:border-primary transition-colors">
                         <p class="text-secondary font-label text-xs font-bold mb-1">{fmtDate(item.data.date)}</p>
-                        <h4 class="font-body font-semibold text-on-surface group-hover:text-primary transition-colors">{item.data.title}</h4>
+                        <h4 class="font-body font-semibold text-on-surface group-hover:text-primary transition-colors mb-2">{item.data.title}</h4>
+                        {item.body?.trim() && (
+                            <p class="font-body text-sm text-on-surface-variant leading-relaxed">
+                                {item.body.trim().slice(0, 1024)}{item.body.trim().length > 1024 ? '…' : ''}
+                            </p>
+                        )}
                     </article>
                 ))}
             </div>
