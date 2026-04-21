@@ -21,7 +21,7 @@ function fmtDate(d: Date) {
 
         <section class="space-y-6">
             {sortedNews.map(item => (
-                <article class="p-8 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all duration-300 group flex flex-col md:flex-row gap-6 items-start">
+                <article id={item.id} class="p-8 bg-surface-container-low rounded-xl hover:bg-surface-container-high transition-all duration-300 group flex flex-col md:flex-row gap-6 items-start scroll-mt-24">
                     <div class="w-full md:w-48 shrink-0 pt-1">
                         <div class="font-label text-sm text-outline">{fmtDate(item.data.date)}</div>
                     </div>

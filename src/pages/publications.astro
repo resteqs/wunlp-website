@@ -53,21 +53,11 @@ const sortedPublications = allPublications.sort((a, b) => b.data.date.valueOf() 
                             </h2>
                             <p class="font-body text-on-surface-variant mb-4">{pub.data.authors}</p>
                             
-                            <div class="flex flex-wrap gap-4">
+                            <div class="flex flex-wrap gap-4 mt-2">
                                 {pub.data.pdfUrl && (
-                                    <a href={pub.data.pdfUrl} class="inline-flex items-center text-primary font-body text-sm font-medium hover:underline underline-offset-4 decoration-primary-container transition-all">
-                                        <span class="material-symbols-outlined text-[18px] mr-1">picture_as_pdf</span> PDF
+                                    <a href={pub.data.pdfUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center text-primary font-body text-sm font-medium hover:underline underline-offset-4 decoration-primary-container transition-all bg-surface-container-lowest px-3 py-1.5 rounded-md border border-outline-variant shadow-sm hover:shadow">
+                                        <span class="material-symbols-outlined text-[18px] mr-1.5">auto_stories</span> arXiv
                                     </a>
-                                )}
-                                {pub.data.codeUrl && (
-                                    <a href={pub.data.codeUrl} class="inline-flex items-center text-primary font-body text-sm font-medium hover:underline underline-offset-4 decoration-primary-container transition-all">
-                                        <span class="material-symbols-outlined text-[18px] mr-1">code</span> Code
-                                    </a>
-                                )}
-                                {pub.data.bibtex && (
-                                    <button class="inline-flex items-center text-on-surface-variant font-body text-sm font-medium hover:text-primary transition-colors">
-                                        <span class="material-symbols-outlined text-[18px] mr-1">data_object</span> BibTeX
-                                    </button>
                                 )}
                             </div>
                         </div>
