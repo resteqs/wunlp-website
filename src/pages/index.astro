@@ -30,18 +30,18 @@ function fmtDate(d: Date) {
                     class="w-full h-full object-cover opacity-20"
                 />
             )}
-            <!-- Gradient covers full surface so wide text stays readable -->
-            <div class="absolute inset-0 bg-gradient-to-b from-surface/95 via-surface/90 to-surface/80"></div>
+            <!-- Gradient from left (opaque) fading out on the right to reveal the image, adjusted to keep wide text readable -->
+            <div class="absolute inset-0 bg-gradient-to-r from-surface from-40% via-surface/80 via-70% to-transparent"></div>
         </div>
 
-        <!-- Hero text: wide, full column -->
+        <!-- Hero text: wide column -->
         <div class="relative z-10 max-w-4xl">
             <p class="text-secondary font-label uppercase tracking-widest text-sm mb-4 font-semibold">{site.heroTagline}</p>
             <h1 class="font-headline text-5xl md:text-7xl font-bold leading-tight mb-8 text-on-surface">
                 {site.heroHeadlineLine1} <br/>
                 <span class="text-primary">{site.heroHeadlineLine2}</span>
             </h1>
-            <!-- Body text is now max-w-4xl (matches the container) — readable because gradient is a soft top-down veil -->
+            <!-- Body text is max-w-4xl, readable because the gradient solidifies the left 60-70% -->
             <p class="font-body text-xl text-on-surface-variant leading-relaxed mb-10">
                 {site.heroBody}
             </p>
