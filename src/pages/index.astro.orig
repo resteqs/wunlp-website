@@ -35,8 +35,8 @@ function fmtDate(d: Date) {
         </div>
 
         <!-- Hero text: wide column -->
-        <div class="relative z-10 flex flex-col lg:flex-row items-center justify-between w-full">
-            <div class="max-w-4xl relative z-10">
+        <div class="relative z-10 max-w-5xl flex flex-col lg:flex-row items-center justify-between w-full">
+            <div class="flex-1 max-w-3xl">
                 <p class="text-secondary font-label uppercase tracking-widest text-sm mb-4 font-semibold">{site.heroTagline}</p>
                 <h1 class="font-headline text-5xl md:text-7xl font-bold leading-tight mb-8 text-on-surface">
                     {site.heroHeadlineLine1} <br/>
@@ -56,8 +56,8 @@ function fmtDate(d: Date) {
                     </a>
                 </div>
             </div>
-            <div class="hidden min-[1199px]:flex min-[1199px]:mt-0 right-12 min-[1199px]:absolute z-0 items-center justify-end w-full max-w-md pointer-events-none opacity-90 -translate-y-20">
-                <img src={`${import.meta.env.BASE_URL}logo.svg`} alt="WüNLP Logo" class="w-full max-w-[300px] h-auto object-contain drop-shadow-xl" />
+            <div class="mt-12 lg:mt-0 lg:ml-12 shrink-0">
+                <img src="/logo.svg" alt="NLP Logo" class="w-48 lg:w-64 h-auto object-contain drop-shadow-lg" />
             </div>
         </div>
     </section>
